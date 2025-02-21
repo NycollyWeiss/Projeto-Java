@@ -66,9 +66,9 @@ public class MenuUser {
 				subOpcao = leia.nextInt();
 				//consome quebra de linha(enter), quando vc usa outros next sem ser o line
 				leia.nextLine();
-				
+				try {
 				switch(subOpcao) {
-				
+				 
 				case 1:
 					Produto produtoCadastro = new Produto();
 					
@@ -149,6 +149,9 @@ public class MenuUser {
 				
 				
 					}
+				}catch(Exception ex) {
+					System.out.println(ex.getMessage());
+				}
 				}
 				
 				

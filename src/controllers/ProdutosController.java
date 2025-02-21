@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import repository.ProdutoRepository;
 import shop.Produto;
 
-public class ProdutosController implements ProdutoRepository {
+public class ProdutosController extends BaseController implements ProdutoRepository {
 
 	
 	private ArrayList <Produto> listaProduto = new ArrayList<Produto>();
@@ -22,9 +22,9 @@ public class ProdutosController implements ProdutoRepository {
 		
 	}
 	@Override
-	public void listarTodos() {
+	public void listarTodos() throws Exception {
 		if(listaProduto.isEmpty()) {
-			System.out.println("Nenhum produto cadastrado!");
+			throw new Exception("Nenhum produto cadastrado!");
 		}
 		
 		for(Produto produto: listaProduto) {
@@ -41,30 +41,33 @@ public class ProdutosController implements ProdutoRepository {
 	
 	@Override
 	//produto mini é variavel 
-	public void atualizar(Produto produto) {
+	public void atualizar(Produto produto) throws Exception {
 		 Produto buscaProduto = buscarNaLista(produto.getId());
 			
 			if (buscaProduto!= null) {
 				listaProduto.set(listaProduto.indexOf(produto),produto);
 				
 				System.out.println("\nO produto " + produto.getId() + " foi atualizada com sucesso!");
-			}else
-				System.out.println("\nO produto " + produto.getId() + " não foi encontrada!");
+			}else {
+				throw new Exception("\nO produto " + produto.getId() + " não foi encontrada!");
+			}
 	    }
 		
 	
-	
-	public void deletar(int numero) {
+	@Override
+	public void deletar(int numero) throws Exception {
+		
 		Produto produto = buscarNaLista(numero);
 		if(produto != null) {
 			
 			if(listaProduto.remove(produto) == true)
 				System.out.println("\n" + produto.getId() + " foi deletada com sucesso!");
-		}else
-			System.out.println("\n " + produto.getId() + " não foi encontrada!");
+		}else {
+			throw new Exception("\n " + numero + " não foi encontrada!");
+		}
     }
    
- // tipo Produto
+	@Override
 	public Produto buscarNaLista(int numero) {
 		for(Produto produto: listaProduto) {
 			if(produto.getId() == numero) {
